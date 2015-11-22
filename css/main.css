@@ -1,0 +1,93 @@
+/*
+* Cheng's custom CSS Template V.1.0
+* Copyright 2013, @cdeng
+* AUTHOR: Cheng Deng // https://github.com/cdeng
+* DATE: 09/25/2013
+1 - GLOBAL
+2 - HEADER
+3 - MAIN CONTENT
+4 - FOOTER & COPYRIGHT
+5 - CUSTOM STYLES
+*/
+
+/**
+    Colors:
+    WPI Crimson: #B31B34;
+    WPI Gray   : #999999;
+**/
+
+/*=================================================
+1 - GLOBAL
+=================================================*/
+
+html {
+    position: relative;
+    min-height: 100%;
+}
+
+body {
+    margin-bottom: 60px;
+    background-color: #fcfcfa;
+}
+
+/*=================================================
+2 - HEADER
+=================================================*/
+
+.header h1 {
+    font-size: 48px;
+    padding: 25px 0 5px 0;
+}
+
+.header h1 small {
+    padding-left: 10px;
+}
+
+/*=================================================
+3 - MAIN CONTENT
+=================================================*/
+
+.main {
+    padding-top: 20px;
+}
+
+.main hr {
+    border-top: 1px solid #B31B34;
+}
+
+/*=================================================
+4 - FOOTER & COPYRIGHT
+=================================================*/
+
+.footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 60px;
+    padding: 15px 0;
+    background: #e7ded0;
+    -webkit-box-shadow: inset 0 1px 1px #cdc7bd;
+    -moz-box-shadow: inset 0 1px 1px #cdc7bd;
+    box-shadow: inset 0 1px 1px #cdc7bd;
+}
+
+.footer .copyright,
+.footer .copyright a {
+    color: #79746e;
+    font-size: 1em;
+    line-height: 2.3em;
+}
+
+.footer .copyright a {
+    border-bottom: dotted 1px #000;
+}
+
+.footer .copyright a:hover {
+    color: #000;
+    text-decoration: none;
+    border-bottom: solid 1px #f4ece0;
+}
+
+/*=================================================
+5 - CUSTOM STYLES
+=================================================*/
