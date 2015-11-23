@@ -91,3 +91,14 @@ body {
 /*=================================================
 5 - CUSTOM STYLES
 =================================================*/
+
+.hashtagTrendsMapSvg svg {
+  background-color: #333333;
+}
+
+.hashtagTrendsMapSvg svg .country {
+  stroke: #2d2d2d;
+  stroke-opacity: .6;
+  fill: #141414;
+  fill-opacity: 1;
+}
