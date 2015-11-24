@@ -24,6 +24,7 @@ Instagrams based on specific hashtag by using D3.
 * [D3 3.5.9](http://d3js.org/)
 * [Bootstrap 3.3.5](http://getbootstrap.com/)
 * [Topojson 1.6.19](https://github.com/mbostock/topojson)
+* [Moment 2.10.6](http://momentjs.com/)
 
 ## Contributing
 
