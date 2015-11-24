@@ -92,6 +92,10 @@ body {
 5 - CUSTOM STYLES
 =================================================*/
 
+svg {
+  font: 10px sans-serif;
+}
+
 .hashtagTrendsMapSvg svg {
   background-color: #333333;
 }
@@ -101,4 +105,16 @@ body {
   stroke-opacity: .6;
   fill: #141414;
   fill-opacity: 1;
+}
+
+.areaChartSvg .area {
+  fill: steelblue;
+  clip-path: url(#clip);
+}
+
+.areaChartSvg .axis path,
+.areaChartSvg .axis line {
+  fill: none;
+  stroke: #000;
+  shape-rendering: crispEdges;
 }
