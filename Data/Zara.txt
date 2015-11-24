@@ -1,0 +1,444 @@
+----Post 4, 2-----
+username = rosegolddustyrose
+location = Santa Monica, California
+longitude = -118.481000
+latitude = 34.022100
+
+----Post 6, 3-----
+username = abc12341
+location = ??????
+longitude = 127.258804
+latitude = 36.515031
+
+----Post 8, 4-----
+username = corcr
+location = Town Square Las Vegas
+longitude = -115.176776
+latitude = 36.067904
+
+----Post 11, 13-----
+username = adrianmp
+location = Encino Oaks
+longitude = -118.517291
+latitude = 34.169758
+
+----Post 13, 12-----
+username = sookyungjo
+location = The Brooklyn Bridge New York City
+longitude = -73.997122
+latitude = 40.706296
+
+----Post 19, 7-----
+username = debonairpredestin
+location = Newbury Street
+longitude = -71.084167
+latitude = 42.349167
+
+----Post 22, 4-----
+username = missvoguetcervi
+location = Eastern Suburbs, Sydney
+longitude = 151.229629
+latitude = -33.894551
+
+----Post 24, 18-----
+username = dhananjay_choudhary
+location = Rasala
+longitude = 73.076374
+latitude = 26.372516
+
+----Post 27, 18-----
+username = joze_king
+location = Dia.Lo.Gue
+longitude = 106.816394
+latitude = -6.272888
+
+----Post 29, 4-----
+username = maohanada
+location = Zara 5th Ave new-york city
+longitude = -73.976185
+latitude = 40.759944
+
+----Post 30, 2-----
+username = deltamars
+location = ??????? ???
+longitude = 37.614601
+latitude = 55.755810
+
+----Post 32, 16-----
+username = theey3zz
+location = ????????????? line: Theey33
+longitude = 101.198152
+latitude = 12.713531
+
+----Post 32, 18-----
+username = theey3zz
+location = ????????????? line: Theey33
+longitude = 101.198152
+latitude = 12.713531
+
+----Post 33, 1-----
+username = giorgostrakatrouka
+location = Black Iron Tavern
+longitude = -87.644497
+latitude = 41.889030
+
+----Post 33, 5-----
+username = theey3zz
+location = ????????????? line: Theey33
+longitude = 101.198152
+latitude = 12.713531
+
+----Post 33, 15-----
+username = theey3zz
+location = ????????????? line: Theey33
+longitude = 101.198152
+latitude = 12.713531
+
+----Post 33, 20-----
+username = theey3zz
+location = ????????????? line: Theey33
+longitude = 101.198152
+latitude = 12.713531
+
+----Post 34, 9-----
+username = theey3zz
+location = ????????????? line: Theey33
+longitude = 101.198152
+latitude = 12.713531
+
+----Post 34, 13-----
+username = theey3zz
+location = ????????????? line: Theey33
+longitude = 101.198152
+latitude = 12.713531
+
+----Post 34, 19-----
+username = twitwimarin
+location = Brisbane, Australia
+longitude = 153.028000
+latitude = -27.467800
+
+----Post 35, 1-----
+username = theey3zz
+location = ????????????? line: Theey33
+longitude = 101.198152
+latitude = 12.713531
+
+----Post 35, 5-----
+username = theey3zz
+location = ????????????? line: Theey33
+longitude = 101.198152
+latitude = 12.713531
+
+----Post 35, 12-----
+username = theey3zz
+location = ????????????? line: Theey33
+longitude = 101.198152
+latitude = 12.713531
+
+----Post 36, 18-----
+username = cannnnnnnnnny
+location = Takayama, Gifu
+longitude = 137.250000
+latitude = 36.133300
+
+----Post 39, 5-----
+username = masashi_instagram
+location = Japan
+longitude = 136.000000
+latitude = 35.000000
+
+----Post 39, 13-----
+username = theey33
+location = ????????????? line: Theey33
+longitude = 101.198152
+latitude = 12.713531
+
+----Post 40, 7-----
+username = theey33
+location = ????????????? line: Theey33
+longitude = 101.198152
+latitude = 12.713531
+
+----Post 40, 9-----
+username = famous_nsk
+location = Ploshchad Lenina
+longitude = 82.920556
+latitude = 55.030000
+
+----Post 40, 10-----
+username = theey33
+location = ????????????? line: Theey33
+longitude = 101.198152
+latitude = 12.713531
+
+----Post 41, 5-----
+username = blanca_azorin
+location = Sydney, Australia
+longitude = 151.211000
+latitude = -33.860000
+
+----Post 41, 8-----
+username = sohee_159
+location = ?? ????
+longitude = 127.010804
+latitude = 37.505575
+
+----Post 41, 12-----
+username = theey33
+location = ????????????? line: Theey33
+longitude = 101.198152
+latitude = 12.713531
+
+----Post 41, 13-----
+username = k279495
+location = Kansai University
+longitude = 135.508147
+latitude = 34.770375
+
+----Post 41, 19-----
+username = theey33
+location = ????????????? line: Theey33
+longitude = 101.198152
+latitude = 12.713531
+
+----Post 42, 6-----
+username = aforagneshforhappy
+location = No Signature Seafood
+longitude = 103.822412
+latitude = 1.263930
+
+----Post 42, 11-----
+username = theey33
+location = ????????????? line: Theey33
+longitude = 101.198152
+latitude = 12.713531
+
+----Post 43, 1-----
+username = theey33
+location = ????????????? line: Theey33
+longitude = 101.198152
+latitude = 12.713531
+
+----Post 43, 14-----
+username = theey33
+location = ????????????? line: Theey33
+longitude = 101.198152
+latitude = 12.713531
+
+----Post 44, 6-----
+username = theey33
+location = ????????????? line: Theey33
+longitude = 101.198152
+latitude = 12.713531
+
+----Post 44, 16-----
+username = theey33
+location = ????????????? line: Theey33
+longitude = 101.198152
+latitude = 12.713531
+
+----Post 45, 4-----
+username = theey33
+location = ????????????? line: Theey33
+longitude = 101.198152
+latitude = 12.713531
+
+----Post 47, 15-----
+username = aforagneshforhappy
+location = Little India Singapore
+longitude = 103.821801
+latitude = 1.265004
+
+----Post 48, 15-----
+username = thesopranotenor
+location = Rosecliff
+longitude = -71.305556
+latitude = 41.465278
+
+----Post 53, 6-----
+username = katharinaplachta
+location = Newbury Street
+longitude = -71.084167
+latitude = 42.349167
+
+----Post 53, 14-----
+username = dos687
+location = The Office Spiritorium
+longitude = -107.881958
+latitude = 37.271099
+
+----Post 55, 13-----
+username = safary.style
+location = 6th Street, Austin, TX
+longitude = -97.739810
+latitude = 30.267061
+
+----Post 55, 17-----
+username = aforagneshforhappy
+location = The Fullerton Bay Hotel Singapore
+longitude = 103.853572
+latitude = 1.283548
+
+----Post 58, 18-----
+username = faverolukas
+location = Florianópolis, Brazil
+longitude = -48.566700
+latitude = -27.583300
+
+----Post 59, 3-----
+username = aforagneshforhappy
+location = Melion Park
+longitude = 103.852518
+latitude = 1.295473
+
+----Post 61, 1-----
+username = winnramos
+location = Sky Tower - Solaire Resort & Casino
+longitude = 120.980799
+latitude = 14.522406
+
+----Post 63, 3-----
+username = my.rad
+location = Les Docks - Cité de la Mode et du Design
+longitude = 2.370267
+latitude = 48.840957
+
+----Post 63, 6-----
+username = meyidees
+location = Bushwick, Brooklyn
+longitude = -73.920274
+latitude = 40.695714
+
+----Post 63, 18-----
+username = lonestar.looking.glass
+location = Houston, Texas
+longitude = -95.383200
+latitude = 29.762900
+
+----Post 64, 10-----
+username = whatweworeblog
+location = Mississauga Celebration Square
+longitude = -79.643104
+latitude = 43.588232
+
+----Post 64, 16-----
+username = i_randhawa_sukh
+location = Sheridan College Davis Campus
+longitude = -79.738541
+latitude = 43.656447
+
+----Post 65, 11-----
+username = pf2thewall
+location = Irvine, California
+longitude = -117.793000
+latitude = 33.684100
+
+----Post 65, 15-----
+username = monearansom
+location = New York, New York
+longitude = -74.006400
+latitude = 40.714200
+
+----Post 67, 16-----
+username = aforagneshforhappy
+location = Infinity Pool, Sky Park Marina Bay Sands Hotel
+longitude = 103.860740
+latitude = 1.283826
+
+----Post 72, 17-----
+username = mr._kobystyle
+location = 5 Fifth Ave Manhathan New York
+longitude = -73.980303
+latitude = 40.755821
+
+----Post 72, 20-----
+username = aforagneshforhappy
+location = Shenzhen, China
+longitude = 114.100000
+latitude = 22.550000
+
+----Post 74, 20-----
+username = morebrooklynplease
+location = Brooklyn, New York
+longitude = -73.950000
+latitude = 40.650000
+
+----Post 75, 8-----
+username = anthonyhunbun
+location = Baybrook Mall
+longitude = -95.148175
+latitude = 29.542028
+
+----Post 78, 3-----
+username = jo.ch1
+location = Las Vegas, Nevada
+longitude = -115.136000
+latitude = 36.175000
+
+----Post 78, 9-----
+username = ____408_
+location = Yamato-Yagi Station
+longitude = 135.792144
+latitude = 34.513070
+
+----Post 85, 18-----
+username = leonberti_one
+location = Quito Hotel Dan Carlton
+longitude = -78.481027
+latitude = -0.183421
+
+----Post 86, 13-----
+username = post_shopp
+location = ???????????????????????
+longitude = 104.725058
+latitude = 16.950658
+
+----Post 87, 8-----
+username = post_shopp
+location = ???????????????????????
+longitude = 104.725058
+latitude = 16.950658
+
+----Post 88, 4-----
+username = kobbygirl
+location = Doshisha University
+longitude = 135.760973
+latitude = 35.029800
+
+----Post 88, 20-----
+username = spenny_delight
+location = Chicago, Illinois
+longitude = -87.684400
+latitude = 41.836900
+
+----Post 90, 18-----
+username = nyracampos
+location = C.C. Galerias Escalón
+longitude = -89.229581
+latitude = 13.702378
+
+----Post 96, 5-----
+username = accessorybyceleb
+location = Accessory by Celeb ??????????????????? ???? 1000 ??????
+longitude = 99.500130
+latitude = 18.267281
+
+----Post 98, 4-----
+username = meyidees
+location = Bushwick, Brooklyn
+longitude = -73.920274
+latitude = 40.695714
+
+----Post 99, 16-----
+username = lunacolada
+location = BLUE MALL
+longitude = -69.941092
+latitude = 18.472397
+
+----Post 100, 4-----
+username = accessorybyceleb
+location = Accessory by Celeb ??????????????????? ???? 1000 ??????
+longitude = 99.500130
+latitude = 18.267281
+
