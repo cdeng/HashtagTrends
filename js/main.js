@@ -260,7 +260,7 @@ function drawAreaChart() {
     var xAxis = d3.svg.axis()
             .scale(x)
             .orient("bottom")
-            .tickFormat(d3.time.format("%m/%d %H:00"));
+            .tickFormat(d3.time.format("%m/%d %I%p"));
 
     var yAxis = d3.svg.axis()
             .scale(y)
@@ -313,7 +313,7 @@ function drawAreaChart() {
             .attr("x", 39)
             .attr("dx", "-.8em")
             .attr("dy", ".72em")
-//                .attr("transform", "rotate(-25)")
+            .attr("transform", "rotate(-15)")
             .style("text-anchor", "end");
 
     areaChartSvg.append("g")
@@ -337,10 +337,6 @@ function drawAreaChart() {
             .attr("class", "area")
             .attr("d", area)
             .attr("clip-path", "url(#rectClip)");
-
-    d3.select("#rectClip rect")
-            .transition().duration(10000)
-            .attr("width", areaChartWidth);
 
     var brush = d3.svg.brush()
             .x(x)
@@ -377,6 +373,16 @@ function drawAreaChart() {
         handle.attr("transform", "translate(" + x(value) + ",0)");
         handle.select("text").text(moment(value).format("LLLL"));
     }
+
+    function playAnimation() {
+        d3.select("#rectClip rect")
+                .transition().duration(10000)
+                .attr("width", areaChartWidth);
+    }
+
+    $("#playButton").click(function () {
+        playAnimation();
+    });
 }
 
 $("#controlButtons :input").change(function () {
@@ -386,3 +392,4 @@ $("#controlButtons :input").change(function () {
         svg.selectAll(".site").remove();
     }
 });
+
