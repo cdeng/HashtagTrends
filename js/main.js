@@ -22,15 +22,50 @@
  * THE SOFTWARE.
  */
 
-/* global d3, topojson */
+/* global d3, topojson, moment */
 
 // Variables
 var topo,
-    projection,
-    path,
-    svg,
-    g,
-    throttleTimer;
+        projection,
+        path,
+        svg,
+        g,
+        throttleTimer,
+        dataPath,
+        dataJson;
+
+// Unix date converter
+function dateConverter(unixTime) {
+    return new Date(unixTime * 1000);
+}
+
+// Load data
+dataPath = "data/halloween2015.json";
+d3.json(dataPath, function (data) {
+    // Pre-processing data
+    var i, obj;
+    dataJson = [];
+
+    // Sort array by time
+    data.sort(function (a, b) {
+        return dateConverter(a.created_time) - dateConverter(b.created_time);
+    });
+
+    if (data.length > 0) {
+        for (i = 0; i < data.length; i++) {
+            row = data[i];
+            obj = {
+                "images": row.images,
+                "location": row.location,
+                "created_time": dateConverter(row.created_time),
+                "tagCounts": i + 1
+            };
+            dataJson.push(obj);
+        }
+    }
+
+    drawAreaChart();
+});
 
 /**
  * Map Reference
@@ -167,81 +202,187 @@ function click() {
 // Adjust and redraw map once window size changes
 d3.select(window).on("resize", throttle);
 
-// Area chart timeline
-// Reference
-// http://nyctaxi.herokuapp.com/
+// Draw points on map based on hashtag location data
+function displayTags() {
+    var sites = svg.selectAll(".site")
+            .data(dataJson, function (d) {
+                return d.tagCounts;
+            });
 
-var margin = {top: 20, right: 20, bottom: 20, left: 40},
+    sites.enter().append("circle")
+            .attr("class", "site")
+            .attr("cx", function (d) {
+                return projection([d.location.longitude, d.location.latitude])[0];
+            })
+            .attr("cy", function (d) {
+                return projection([d.location.longitude, d.location.latitude])[1];
+            })
+            .attr("r", 1)
+            .transition().duration(100)
+            .attr("r", 2);
+}
+
+// Function to draw area chart
+function drawAreaChart() {
+
+    // References
+    // Area chart timeline
+    // http://bl.ocks.org/mbostock/3883195
+
+    var margin = {top: 60, right: 20, bottom: 80, left: 40},
     areaChartWidth = width - margin.left - margin.right - 40,
-    areaChartHeight = 140 - margin.top - margin.bottom;
+            areaChartHeight = 246 - margin.top - margin.bottom;
 
-var parseDate = d3.time.format("%d-%b-%y").parse;
+    var startingValue = dataJson[0].created_time;
 
-var x = d3.scale.linear()
-        .range([0, areaChartWidth]);
+    // Find data range
+    var xMin = d3.min(dataJson, function (d) {
+        return Math.min(d.created_time);
+    }),
+            xMax = d3.max(dataJson, function (d) {
+                return Math.max(d.created_time);
+            }),
+            yMin = d3.min(dataJson, function (d) {
+                return Math.min(d.tagCounts);
+            }),
+            yMax = d3.max(dataJson, function (d) {
+                return Math.max(d.tagCounts);
+            });
 
-var y = d3.scale.linear()
-        .range([areaChartHeight, 0]);
+    var x = d3.time.scale()
+            .domain([xMin, xMax])
+            .range([0, areaChartWidth]);
 
-var xAxis = d3.svg.axis()
-        .scale(x)
-        .orient("bottom");
+    var y = d3.scale.linear()
+            .domain([yMin, yMax])
+            .range([areaChartHeight, 0]);
 
-var yAxis = d3.svg.axis()
-        .scale(y)
-        .orient("left")
-        .ticks(4);
+    var xAxis = d3.svg.axis()
+            .scale(x)
+            .orient("bottom")
+            .tickFormat(d3.time.format("%m/%d %H:00"));
 
-var area = d3.svg.area()
-        .x(function (d) {
-            return x(d.time);
-        })
-        .y0(areaChartHeight)
-        .y1(function (d) {
-            return y(d.runningFare);
-        });
+    var yAxis = d3.svg.axis()
+            .scale(y)
+            .orient("left")
+            .ticks(4);
 
-var areaChartSvg = d3.select("#areaChartSvg").append("svg")
-        .attr("width", areaChartWidth + margin.left + margin.right)
-        .attr("height", areaChartHeight + margin.top + margin.bottom)
-        .attr("class", "areaChart")
-        .append("g")
-        .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+    var line = d3.svg.line()
+            .interpolate("basis")
+            .x(function (d) {
+                return x(d.created_time);
+            })
+            .y(function (d) {
+                return y(d.tagCounts);
+            });
 
-var markerLine = areaChartSvg.append('line')
-        .attr('x1', 0)
-        .attr('y1', 0)
-        .attr('x2', 0)
-        .attr('y2', areaChartHeight)
-        .attr("class", "markerLine");
+    var area = d3.svg.area()
+            .x(function (d) {
+                return x(d.created_time);
+            })
+            .y0(areaChartHeight)
+            .y1(function (d) {
+                return y(d.tagCounts);
+            });
 
-var dummyData = [];
+    var areaChartSvg = d3.select("#areaChartSvg").append("svg")
+            .attr("width", areaChartWidth + margin.left + margin.right)
+            .attr("height", areaChartHeight + margin.top + margin.bottom)
+            .attr("class", "areaChart")
+            .append("g")
+            .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-x.domain([0, 24]);
-y.domain([0, 600]);
+    areaChartSvg.append("clipPath")
+            .attr("id", "rectClip")
+            .append("rect")
+            .attr("width", 0)
+            .attr("height", areaChartHeight);
 
-var chartPath = areaChartSvg.append("path")
-        .datum(dummyData)
-        .attr("class", "area");
-//.attr("d", area);
+    var markerLine = areaChartSvg.append('line')
+            .attr('x1', 0)
+            .attr('y1', 0)
+            .attr('x2', 0)
+            .attr('y2', areaChartHeight)
+            .attr("class", "markerLine");
 
-areaChartSvg.append("g")
-        .attr("class", "x axis")
-        .attr("transform", "translate(0," + areaChartHeight + ")")
-        .call(xAxis)
-        .append("text")
-        .attr("y", 9)
-        .attr("x", 39)
-        .attr("dy", ".71em")
-        .style("text-anchor", "end")
-        .text("Hour");
+    areaChartSvg.append("g")
+            .attr("class", "x axis")
+            .attr("transform", "translate(0," + areaChartHeight + ")")
+            .call(xAxis)
+            .selectAll("text")
+            .attr("x", 39)
+            .attr("dx", "-.8em")
+            .attr("dy", ".72em")
+//                .attr("transform", "rotate(-25)")
+            .style("text-anchor", "end");
 
-areaChartSvg.append("g")
-        .attr("class", "y axis")
-        .call(yAxis)
-        .append("text")
-        .attr("transform", "rotate(-90)")
-        .attr("y", 6)
-        .attr("dy", ".71em")
-        .style("text-anchor", "end")
-        .text("Hashtags");
+    areaChartSvg.append("g")
+            .attr("class", "y axis")
+            .call(yAxis)
+            .append("text")
+            .attr("transform", "rotate(-90)")
+            .attr("y", 6)
+            .attr("dy", ".71em")
+            .style("text-anchor", "end")
+            .text("Hashtags");
+
+    areaChartSvg.append("path")
+            .datum(dataJson)
+            .attr("class", "line")
+            .attr("d", line)
+            .attr("clip-path", "url(#rectClip)");
+
+    areaChartSvg.append("path")
+            .datum(dataJson)
+            .attr("class", "area")
+            .attr("d", area)
+            .attr("clip-path", "url(#rectClip)");
+
+    d3.select("#rectClip rect")
+            .transition().duration(10000)
+            .attr("width", areaChartWidth);
+
+    var brush = d3.svg.brush()
+            .x(x)
+            .extent([startingValue, startingValue])
+            .on("brush", brushed);
+
+    var slider = areaChartSvg.append("g")
+            .attr("class", "slider")
+            .call(brush);
+
+    var handle = slider.append("g")
+            .attr("class", "handle");
+
+    handle.append("path")
+            .attr("transform", "translate(0," + areaChartHeight + ")")
+            .attr("d", "M 0 -100 V 0");
+
+    handle.append('text')
+            .text(startingValue)
+            .attr("transform", "translate(" + (-18) + " ," + (areaChartHeight - 125) + ")");
+
+    slider
+            .call(brush.event);
+
+    function brushed() {
+        var value = brush.extent()[0];
+
+        if (d3.event.sourceEvent) {
+            handle.select('path');
+            value = x.invert(d3.mouse(this)[0]);
+            brush.extent([value, value]);
+        }
+
+        handle.attr("transform", "translate(" + x(value) + ",0)");
+        handle.select("text").text(moment(value).format("LLLL"));
+    }
+}
+
+$("#controlButtons :input").change(function () {
+    if (this.value === "on") {
+        displayTags();
+    } else {
+        svg.selectAll(".site").remove();
+    }
+});
