@@ -40,7 +40,7 @@ function dateConverter(unixTime) {
 }
 
 // Load data
-dataPath = "data/halloween2015.json";
+dataPath = "data/parisattacks.json";
 d3.json(dataPath, function (data) {
     // Pre-processing data
     var i, obj;
