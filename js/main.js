@@ -219,7 +219,7 @@ function displayTags() {
             })
             .attr("r", 1)
             .transition().duration(100)
-            .attr("r", 2);
+            .attr("r", 4);
 }
 
 // Function to draw area chart
