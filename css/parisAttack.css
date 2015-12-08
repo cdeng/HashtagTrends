@@ -63,6 +63,7 @@ html, body{
 .areaChartSvg .area {
     stroke: none;
     fill: #999999;
+    opacity: .6;
 }
 
 .areaChartSvg .line {

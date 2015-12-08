@@ -119,7 +119,7 @@ function drawCircles(newData) {
     feature = circlesGroup.selectAll("circle")
             .data(newData)
             .enter().append("circle")
-            .attr("r", 4)
+            .attr("r", 8)
             .attr("class", "hashTagCircles");
 
     visUpdate();
