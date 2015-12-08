@@ -37,17 +37,26 @@ function showImages() {
 
 function popupImages() {
 	currentTime += 3600;
-	
+
 	while (parseInt(posts[imageIndex].created_time) < currentTime) {
 		// add to image table
-		if (imageIndex % 10 == 0) {
-			currentTableRow = imageTable.insertRow(imageIndex / 10);
+		if (imageIndex % 4 == 0) {
+			currentTableRow = imageTable.insertRow(imageIndex / 4);
 		}
-		
-		var cell = currentTableRow.insertCell(imageIndex % 10);
-		cell.innerHTML = "<p>" + new Date(parseInt(posts[imageIndex].created_time) * 1000) + "</p>" + "<img src=" + posts[imageIndex].images.thumbnail.url + ">";
-		
+
+		var cell = currentTableRow.insertCell(imageIndex % 4);
+		cell.innerHTML = "<a class=\"example-image-link\" href=\"" + posts[imageIndex].images.standard_resolution.url 
+			+ "\" data-lightbox=\"image-" + imageIndex 
+			+ "\" data-title=\"" + posts[imageIndex].caption.text + "(" + posts[imageIndex].location.name + ")" + "\">"
+			+ "<img class=\"example-image\" width=40px height=40px src=\"" + posts[imageIndex].images.thumbnail.url + "\"></a>";
+
 		imageIndex++;
+		if (imageIndex > posts.length - 1)
+			break;
+	}
+
+	if (imageIndex > posts.length - 1) {
+		window.clearInterval(timeHandler);
 	}
 }
 
