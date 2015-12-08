@@ -1,0 +1,104 @@
+/*
+* Cheng's custom CSS Template V.1.0
+* Copyright 2013, @cdeng
+* AUTHOR: Cheng Deng // https://github.com/cdeng
+* DATE: 09/25/2013
+1 - GLOBAL
+2 - CUSTOM STYLES
+*/
+
+/**
+    Colors:
+    WPI Crimson: #B31B34;
+    WPI Gray   : #999999;
+**/
+
+/*=================================================
+1 - GLOBAL
+=================================================*/
+
+html, body{
+    margin: 0;
+    padding: 0;
+    font-family: "Open Sans", sans-serif;
+}
+
+/*=================================================
+2 - CUSTOM STYLES
+=================================================*/
+
+.sidebar {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: 20%;
+    padding: 1em;
+    z-index: 1;
+    color: white;
+    background: rgba(153,153,153,0.2);
+}
+
+.hashtagTrendsMapSvg {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}
+
+.hashtagTrendsMapSvg .hashTagCircles {
+    stroke: black;
+    opacity: .6;
+    fill: #B31B34;
+}
+
+.areaChartSvg {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+}
+
+.areaChartSvg .area {
+    stroke: none;
+    fill: #999999;
+    opacity: .6;
+}
+
+.areaChartSvg .line {
+    stroke: #B31B34;
+    fill: none;
+    stroke-width: 3;
+}
+
+.areaChartSvg .axis path,
+.areaChartSvg .axis line {
+    fill: none;
+    stroke: #999999;
+}
+
+.areaChartSvg .axis text {
+    fill: #999999;
+}
+
+.areaChartSvg .slider .handle path {
+    stroke: #B31B34;
+    stroke-width: 10px;
+    opacity: .6;
+    stroke-linecap: round;
+    pointer-events: none;
+}
+
+.areaChartSvg .slider .handle text {
+    fill: #999999;
+    text-align: center;
+    font-size: 16px;
+    z-index: 999;
+}
+
+.hashtagImages {
+    height: 80%;
+    overflow: auto;
+    margin-bottom: 10px;
+}

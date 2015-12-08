@@ -93,28 +93,52 @@ body {
 =================================================*/
 
 svg {
-  font: 10px sans-serif;
+    font: 10px sans-serif;
 }
 
 .hashtagTrendsMapSvg svg {
-  background-color: #333333;
+    background-color: #333333;
 }
 
 .hashtagTrendsMapSvg svg .country {
-  stroke: #2d2d2d;
-  stroke-opacity: .6;
-  fill: #141414;
-  fill-opacity: 1;
+    stroke: #2d2d2d;
+    stroke-opacity: .6;
+    fill: #141414;
+    fill-opacity: 1;
+}
+
+.hashtagTrendsMapSvg svg .site  {
+    fill: #fffed3;
+    fill-opacity: .5;
 }
 
 .areaChartSvg .area {
-  fill: steelblue;
-  clip-path: url(#clip);
+    stroke: none;
+    fill: #999999;
+}
+
+.areaChartSvg .line {
+    stroke: #B31B34;
+    fill: none;
+    stroke-width: 3;
 }
 
 .areaChartSvg .axis path,
 .areaChartSvg .axis line {
-  fill: none;
-  stroke: #000;
-  shape-rendering: crispEdges;
+    fill: none;
+    stroke: #000;
+    shape-rendering: crispEdges;
+}
+
+.areaChartSvg .slider .handle path {
+    stroke: #B31B34;
+    stroke-width: 3px;
+    stroke-linecap: round;
+    pointer-events: none;
+}
+
+.areaChartSvg .slider .handle text {
+    fill: #B31B34;
+    text-align: center;
+    font-size: 16px;
 }

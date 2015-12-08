@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="description" content="This is the project for the assignment of Fall 2015 CS573 course at WPI.">
+        <meta name="author" content="Cheng Deng">
+        <link rel="icon" href="favicon.ico">
+
+        <title>#Hashtag Trends</title>
+
+        <!-- Bootstrap, font awesome and custom styles -->
+        <link href="css/bootstrap.min.css" rel="stylesheet" type="text/css">
+        <link href="css/font-awesome.min.css" rel="stylesheet" type="text/css">
+        <link href="css/leaflet.css" rel="stylesheet" type="text/css">
+        <link href="css/lightbox.css" rel="stylesheet" type="text/css">
+        <link href="css/parisAttack.css" rel="stylesheet" type="text/css">
+
+        <!-- 
+            This project has not been tested on any browsers other than Chrome.
+            Some functionality may not work as intended on other browsers, e.g. IE & Firefox.
+        -->
+    </head>
+
+    <body>
+
+        <div id="sidebar" class="sidebar">
+            <h1>#ParisAttack</h1>
+            <p>Instagram Images</p>
+            <div id="hashtagImages" class="hashtagImages"></div>
+            <button type="button" class="btn btn-default" id="playButton">
+                <i class="fa fa-play-circle"></i> Temp Play Button</button>
+        </div>
+
+        <div id="hashtagTrendsMapSvg" class="hashtagTrendsMapSvg"></div>
+        <div id="areaChartSvg" class="areaChartSvg"></div>
+
+        <!-- jQuery, Bootstrap, D3 libraries and main controller -->
+        <script src="js/jquery.min.js" type="text/javascript"></script>
+        <script src="js/bootstrap.min.js" type="text/javascript"></script>
+        <script src="js/d3.min.js" type="text/javascript"></script>
+        <script src="js/topojson.min.js" type="text/javascript"></script>
+        <script src="js/leaflet.js" type="text/javascript"></script>
+        <script src="js/moment.min.js" type="text/javascript"></script>
+        <script src="js/lightbox.min.js" type="text/javascript"></script>
+        <script src="js/parisAttack.js" type="text/javascript"></script>
+    </body>
+</html>

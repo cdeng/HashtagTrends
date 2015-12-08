@@ -22,7 +22,7 @@
  * THE SOFTWARE.
  */
 
-/* global d3, topojson, moment */
+/* global d3, L, moment */
 
 // Variables
 var topo,
@@ -32,11 +32,20 @@ var topo,
         g,
         throttleTimer,
         dataPath,
-        dataJson;
+        dataJson,
+        feature,
+        width = $(window).width(),
+        height = $(window).height(),
+        startingValue,
+        endingValue;
 
 // Unix date converter
 function dateConverter(unixTime) {
     return new Date(unixTime * 1000);
+}
+
+function unixConverter(date) {
+    return moment(date).unix();
 }
 
 // Load data
@@ -50,176 +59,88 @@ d3.json(dataPath, function (data) {
     data.sort(function (a, b) {
         return dateConverter(a.created_time) - dateConverter(b.created_time);
     });
-
+//    console.log(data);
     if (data.length > 0) {
         for (i = 0; i < data.length; i++) {
             row = data[i];
             obj = {
-                "images": row.images,
-                "location": row.location,
-                "created_time": dateConverter(row.created_time),
-                "tagCounts": i + 1
+                images: row.images,
+                location: row.location,
+                created_time: dateConverter(row.created_time),
+                caption: row.caption,
+                tagCounts: i + 1
             };
             dataJson.push(obj);
         }
     }
 
+//    drawCircles();
     drawAreaChart();
+    startWatchingMap();
 });
 
-/**
- * Map Reference
- * World Map Template with D3.js by author unknown
- * http://techslides.com/demos/d3/worldmap-template.html
+/*
+ * Credits
+ * Leafletjs
+ * Openstreetmap
  */
-var zoom = d3.behavior.zoom()
-        .scaleExtent([1, 9])
-        .on("zoom", move);
-var width = document.getElementById('hashtagTrendsMapSvg').offsetWidth;
-var height = width / 2;
-var graticule = d3.geo.graticule();
-var tooltip = d3.select("div#hashtagTrendsMapSvg").append("div").attr("class", "tooltip hidden");
+var map = new L.Map("hashtagTrendsMapSvg", {
+    attributionControl: false
+})
+        .setView([7.8, 60], 2);
 
-// Svg map setup
-function setup(width, height) {
-    projection = d3.geo.mercator()
-            .translate([(width / 2), (height / 2)])
-            .scale(width / 2 / Math.PI);
+// Map dark matter
+// https://cartodb.com/basemaps/
+L.tileLayer('http://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}.png', {
+    minZoom: 2
+}).addTo(map);
 
-    path = d3.geo.path().projection(projection);
+// Initialize the SVG layer
+map._initPathRoot();
 
-    svg = d3.select("div#hashtagTrendsMapSvg").append("svg")
-            .attr("width", width)
-            .attr("height", height)
-            .call(zoom)
-            .on("click", click)
-            .append("g");
+// Add an SVG element to Leaflet’s overlay pane
+var svg = d3.select("#hashtagTrendsMapSvg").select("svg"),
+        circlesGroup = svg.append("g").attr("class", "circlesGroup");
 
-    g = svg.append("g");
-}
-setup(width, height);
+function drawCircles(newData) {
 
-// Load map data
-d3.json("data/world-topo-min.json", function (error, world) {
-    var countries = topojson.feature(world, world.objects.countries).features;
-    topo = countries;
-    draw(topo);
-});
+    newData.forEach(function (d) {
+        // Lat & Lng
+        if (d.location.latitude && d.location.longitude) {
+            d.LatLng = new L.LatLng(d.location.latitude,
+                    d.location.longitude);
+        }
+    });
 
-// Function for drawing map
-function draw(topo) {
-    var country;
-    svg.append("path")
-            .datum(graticule)
-            .attr("class", "graticule")
-            .attr("d", path);
+    // Remove old circles
+    circlesGroup.selectAll("circle").remove();
 
+    // Append new circles
+    feature = circlesGroup.selectAll("circle")
+            .data(newData)
+            .enter().append("circle")
+            .attr("r", 8)
+            .attr("class", "hashTagCircles");
 
-    g.append("path")
-            .datum({type: "LineString", coordinates: [[-180, 0], [-90, 0], [0, 0], [90, 0], [180, 0]]})
-            .attr("class", "equator")
-            .attr("d", path);
-
-    country = g.selectAll(".country").data(topo);
-
-    country.enter().insert("path")
-            .attr("class", "country")
-            .attr("d", path)
-            .attr("id", function (d, i) {
-                return d.id;
-            })
-            .attr("title", function (d, i) {
-                return d.properties.name;
-            });
-
-//    //offsets for tooltips
-//    var offsetL = document.getElementById('hashtagTrendsMapSvg').offsetLeft + 20;
-//    var offsetT = document.getElementById('hashtagTrendsMapSvg').offsetTop + 10;
-//
-//    // tooltips
-//    country
-//            .on("mousemove", function (d, i) {
-//
-//                var mouse = d3.mouse(svg.node()).map(function (d) {
-//                    return parseInt(d);
-//                });
-//
-//                tooltip.classed("hidden", false)
-//                        .attr("style", "left:" + (mouse[0] + offsetL) + "px;top:" + (mouse[1] + offsetT) + "px")
-//                        .html(d.properties.name);
-//
-//            })
-//            .on("mouseout", function (d, i) {
-//                tooltip.classed("hidden", true);
-//            });
+    visUpdate();
 }
 
-// Adjust and redraw map
-function redraw() {
-    width = document.getElementById('hashtagTrendsMapSvg').offsetWidth;
-    height = width / 2;
-    d3.select('svg').remove();
-    setup(width, height);
-    draw(topo);
+function startWatchingMap() {
+    map.on("viewreset", visUpdate);
+    visUpdate();
 }
 
-// Function for map moving
-function move() {
+function visUpdate() {
 
-    var t = d3.event.translate;
-    var s = d3.event.scale;
-    zscale = s;
-    var h = height / 4;
-
-    t[0] = Math.min(
-            (width / height) * (s - 1),
-            Math.max(width * (1 - s), t[0])
-            );
-
-    t[1] = Math.min(
-            h * (s - 1) + h * s,
-            Math.max(height * (1 - s) - h * s, t[1])
-            );
-
-    zoom.translate(t);
-    g.attr("transform", "translate(" + t + ")scale(" + s + ")");
-}
-
-// Throttle for redraw map
-function throttle() {
-    window.clearTimeout(throttleTimer);
-    throttleTimer = window.setTimeout(function () {
-        redraw();
-    }, 200);
-}
-
-// Geo translation on mouse click in map
-function click() {
-    var latlon = projection.invert(d3.mouse(this));
-    console.log(latlon);
-}
-
-// Adjust and redraw map once window size changes
-d3.select(window).on("resize", throttle);
-
-// Draw points on map based on hashtag location data
-function displayTags() {
-    var sites = svg.selectAll(".site")
-            .data(dataJson, function (d) {
-                return d.tagCounts;
-            });
-
-    sites.enter().append("circle")
-            .attr("class", "site")
-            .attr("cx", function (d) {
-                return projection([d.location.longitude, d.location.latitude])[0];
-            })
-            .attr("cy", function (d) {
-                return projection([d.location.longitude, d.location.latitude])[1];
-            })
-            .attr("r", 1)
-            .transition().duration(100)
-            .attr("r", 2);
+    feature.attr("transform",
+            function (d) {
+                if (d.LatLng) {
+                    return "translate(" +
+                            map.latLngToLayerPoint(d.LatLng).x + "," +
+                            map.latLngToLayerPoint(d.LatLng).y + ")";
+                }
+            }
+    );
 }
 
 // Function to draw area chart
@@ -229,11 +150,13 @@ function drawAreaChart() {
     // Area chart timeline
     // http://bl.ocks.org/mbostock/3883195
 
-    var margin = {top: 60, right: 20, bottom: 80, left: 40},
-    areaChartWidth = width - margin.left - margin.right - 40,
-            areaChartHeight = 246 - margin.top - margin.bottom;
+    var margin = {top: 40, right: 20, bottom: 40, left: 50},
+    h = 180,
+            areaChartWidth = width - margin.left - margin.right - 40,
+            areaChartHeight = h - margin.top - margin.bottom;
 
-    var startingValue = dataJson[0].created_time;
+    startingValue = dataJson[0].created_time;
+    endingValue = dataJson[dataJson.length - 1].created_time;
 
     // Find data range
     var xMin = d3.min(dataJson, function (d) {
@@ -286,9 +209,10 @@ function drawAreaChart() {
             });
 
     var areaChartSvg = d3.select("#areaChartSvg").append("svg")
-            .attr("width", areaChartWidth + margin.left + margin.right)
-            .attr("height", areaChartHeight + margin.top + margin.bottom)
-            .attr("class", "areaChart")
+            .attr("width", "80%")
+            .attr("height", "100%")
+            .attr("viewBox", "0 0 " + width + " " + h)
+            .attr("preserveAspectRatio", "xMinYMid meet")
             .append("g")
             .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
@@ -313,7 +237,7 @@ function drawAreaChart() {
             .attr("x", 39)
             .attr("dx", "-.8em")
             .attr("dy", ".72em")
-            .attr("transform", "rotate(-15)")
+//            .attr("transform", "rotate(-15)")
             .style("text-anchor", "end");
 
     areaChartSvg.append("g")
@@ -340,7 +264,7 @@ function drawAreaChart() {
 
     var brush = d3.svg.brush()
             .x(x)
-            .extent([startingValue, startingValue])
+            .extent([startingValue, endingValue])
             .on("brush", brushed);
 
     var slider = areaChartSvg.append("g")
@@ -372,23 +296,63 @@ function drawAreaChart() {
 
         handle.attr("transform", "translate(" + x(value) + ",0)");
         handle.select("text").text(moment(value).format("LLLL"));
+
+        var newData = dataJson.filter(function (circle) {
+            return circle.created_time < value;
+        });
+
+        drawCircles(newData);
     }
 
-    function playAnimation() {
+    function playAnimation(timeout) {
+
+        // Play animated slider
+        slider
+                .call(brush.event)
+                .transition() // gratuitous intro!
+                .duration(timeout)
+                .call(brush.extent([x.domain()[1], x.domain()[1]]))
+                .call(brush.event);
+
+        // Play animated area chart
         d3.select("#rectClip rect")
-                .transition().duration(10000)
+                .transition().duration(timeout)
                 .attr("width", areaChartWidth);
+
+        // Show images
+        setIntervalforImages(timeout);
     }
 
     $("#playButton").click(function () {
-        playAnimation();
+        playAnimation(10000);
     });
 }
 
-$("#controlButtons :input").change(function () {
-    if (this.value === "on") {
-        displayTags();
-    } else {
-        svg.selectAll(".site").remove();
+var timeHandler,
+        imageIndex = 0;
+
+function setIntervalforImages(timeout) {
+    var dt = timeout / (dataJson.length + 10);
+    timeHandler = window.setInterval(showImages, dt);
+}
+
+function showImages() {
+
+    // Append to element
+    var elem = $("#hashtagImages");
+
+    imageIndex++;
+
+    if (imageIndex > dataJson.length - 1) {
+        window.clearInterval(timeHandler);
+        imageIndex = 0;
     }
-});
+
+    elem.append("<a class=\"example-image-link\" href=\""
+            + dataJson[imageIndex].images.standard_resolution.url
+            + "\" data-lightbox=\"image-" + imageIndex
+            + "\" data-title=\"" + dataJson[imageIndex].caption.text
+            + "(" + dataJson[imageIndex].location.name + ")" + "\">"
+            + "<img class=\"example-image\" width=40px height=40px src=\""
+            + dataJson[imageIndex].images.thumbnail.url + "\"></a>");
+}
