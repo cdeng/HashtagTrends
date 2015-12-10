@@ -324,7 +324,7 @@ function drawAreaChart() {
     }
 
     $("#playButton").click(function () {
-        playAnimation(10000);
+        playAnimation(20000);
     });
 }
 
