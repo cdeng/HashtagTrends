@@ -26,14 +26,14 @@
 
 // Variables
 var topo,
-        svg,
-        g,
-        dataJson,
-        feature,
-        width = $(window).width(),
-        height = $(window).height(),
-        startingValue,
-        endingValue;
+    svg,
+    g,
+    dataJson,
+    feature,
+    width = $(window).width(),
+    height = $(window).height(),
+    startingValue,
+    endingValue;
 
 // Unix date converter
 function dateConverter(unixTime) {
@@ -55,7 +55,7 @@ d3.json(dataPath, function (data) {
     data.sort(function (a, b) {
         return dateConverter(a.created_time) - dateConverter(b.created_time);
     });
-//    console.log(data);
+    //    console.log(data);
     if (data.length > 0) {
         for (i = 0; i < data.length; i++) {
             row = data[i];
@@ -70,7 +70,7 @@ d3.json(dataPath, function (data) {
         }
     }
 
-//    drawCircles();
+    //    drawCircles();
     drawAreaChart();
     startWatchingMap();
 });
@@ -83,7 +83,7 @@ d3.json(dataPath, function (data) {
 var map = new L.Map("hashtagTrendsMapSvg", {
     attributionControl: false
 })
-        .setView([7.8, 60], 2);
+    .setView([7.8, 60], 2);
 
 // Map dark matter
 // https://cartodb.com/basemaps/
@@ -95,8 +95,16 @@ L.tileLayer('http://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}.png', {
 map._initPathRoot();
 
 // Add an SVG element to Leaflet’s overlay pane
-var svg = d3.select("#hashtagTrendsMapSvg").select("svg"),
-        circlesGroup = svg.append("g").attr("class", "circlesGroup");
+var svg = d3.select("#hashtagTrendsMapSvg").select("svg").on("click",
+    function () {
+        if (!isImageJustPoped) {
+            var popupDiv = $("#popupImage");
+            popupDiv.empty();
+        }
+        isImageJustPoped = false;
+    });
+var circlesGroup = svg.append("g").attr("class", "circlesGroup");
+var isImageJustPoped = false;
 
 function drawCircles(newData) {
 
@@ -104,7 +112,7 @@ function drawCircles(newData) {
         // Lat & Lng
         if (d.location.latitude && d.location.longitude) {
             d.LatLng = new L.LatLng(d.location.latitude,
-                    d.location.longitude);
+                d.location.longitude);
         }
     });
 
@@ -113,10 +121,24 @@ function drawCircles(newData) {
 
     // Append new circles
     feature = circlesGroup.selectAll("circle")
-            .data(newData)
-            .enter().append("circle")
-            .attr("r", 8)
-            .attr("class", "hashTagCircles");
+        .data(newData)
+        .enter().append("circle")
+        .attr("r", 8)
+        .attr("class", "hashTagCircles")
+        .on("click", function (d, i) {
+            
+            //??????????????????????? how can I draw the image at the positioni of the circle???????????????????????????
+            var popupDiv = $("#popupImage");
+            popupDiv.empty();
+            popupDiv.append("<a class=\"example-image-link\" href=\""
+                + d.images.standard_resolution.url
+                + "\" data-lightbox=\"image-" + i
+                + "\" data-title=\"" + d.caption.text
+                + "(" + d.location.name + ")" + "\">"
+                + "<img class=\"example-image\" width=200px height=200px src=\""
+                + d.images.low_resolution.url + "\"></a>");
+            isImageJustPoped = true;
+        });
 
     visUpdate();
 }
@@ -129,14 +151,14 @@ function startWatchingMap() {
 function visUpdate() {
 
     feature.attr("transform",
-            function (d) {
-                if (d.LatLng) {
-                    return "translate(" +
-                            map.latLngToLayerPoint(d.LatLng).x + "," +
-                            map.latLngToLayerPoint(d.LatLng).y + ")";
-                }
+        function (d) {
+            if (d.LatLng) {
+                return "translate(" +
+                    map.latLngToLayerPoint(d.LatLng).x + "," +
+                    map.latLngToLayerPoint(d.LatLng).y + ")";
             }
-    );
+        }
+        );
 }
 
 // Function to draw area chart
@@ -146,10 +168,10 @@ function drawAreaChart() {
     // Area chart timeline
     // http://bl.ocks.org/mbostock/3883195
 
-    var margin = {top: 40, right: 20, bottom: 40, left: 50},
-    h = 180,
-            areaChartWidth = width - margin.left - margin.right - 40,
-            areaChartHeight = h - margin.top - margin.bottom;
+    var margin = { top: 40, right: 20, bottom: 40, left: 50 },
+        h = 180,
+        areaChartWidth = width - margin.left - margin.right - 40,
+        areaChartHeight = h - margin.top - margin.bottom;
 
     startingValue = dataJson[0].created_time;
     endingValue = dataJson[dataJson.length - 1].created_time;
@@ -158,128 +180,128 @@ function drawAreaChart() {
     var xMin = d3.min(dataJson, function (d) {
         return Math.min(d.created_time);
     }),
-            xMax = d3.max(dataJson, function (d) {
-                return Math.max(d.created_time);
-            }),
-            yMin = d3.min(dataJson, function (d) {
-                return Math.min(d.tagCounts);
-            }),
-            yMax = d3.max(dataJson, function (d) {
-                return Math.max(d.tagCounts);
-            });
+        xMax = d3.max(dataJson, function (d) {
+            return Math.max(d.created_time);
+        }),
+        yMin = d3.min(dataJson, function (d) {
+            return Math.min(d.tagCounts);
+        }),
+        yMax = d3.max(dataJson, function (d) {
+            return Math.max(d.tagCounts);
+        });
 
     var x = d3.time.scale()
-            .domain([xMin, xMax])
-            .range([0, areaChartWidth]);
+        .domain([xMin, xMax])
+        .range([0, areaChartWidth]);
 
     var y = d3.scale.linear()
-            .domain([yMin, yMax])
-            .range([areaChartHeight, 0]);
+        .domain([yMin, yMax])
+        .range([areaChartHeight, 0]);
 
     var xAxis = d3.svg.axis()
-            .scale(x)
-            .orient("bottom")
-            .tickFormat(d3.time.format("%m/%d %I%p"));
+        .scale(x)
+        .orient("bottom")
+        .tickFormat(d3.time.format("%m/%d %I%p"));
 
     var yAxis = d3.svg.axis()
-            .scale(y)
-            .orient("left")
-            .ticks(4);
+        .scale(y)
+        .orient("left")
+        .ticks(4);
 
     var line = d3.svg.line()
-            .interpolate("basis")
-            .x(function (d) {
-                return x(d.created_time);
-            })
-            .y(function (d) {
-                return y(d.tagCounts);
-            });
+        .interpolate("basis")
+        .x(function (d) {
+            return x(d.created_time);
+        })
+        .y(function (d) {
+            return y(d.tagCounts);
+        });
 
     var area = d3.svg.area()
-            .x(function (d) {
-                return x(d.created_time);
-            })
-            .y0(areaChartHeight)
-            .y1(function (d) {
-                return y(d.tagCounts);
-            });
+        .x(function (d) {
+            return x(d.created_time);
+        })
+        .y0(areaChartHeight)
+        .y1(function (d) {
+            return y(d.tagCounts);
+        });
 
     var areaChartSvg = d3.select("#areaChartSvg").append("svg")
-            .attr("width", "80%")
-            .attr("height", "100%")
-            .attr("viewBox", "0 0 " + width + " " + h)
-            .attr("preserveAspectRatio", "xMinYMid meet")
-            .append("g")
-            .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+        .attr("width", "80%")
+        .attr("height", "100%")
+        .attr("viewBox", "0 0 " + width + " " + h)
+        .attr("preserveAspectRatio", "xMinYMid meet")
+        .append("g")
+        .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
     areaChartSvg.append("clipPath")
-            .attr("id", "rectClip")
-            .append("rect")
-            .attr("width", 0)
-            .attr("height", areaChartHeight);
+        .attr("id", "rectClip")
+        .append("rect")
+        .attr("width", 0)
+        .attr("height", areaChartHeight);
 
     var markerLine = areaChartSvg.append('line')
-            .attr('x1', 0)
-            .attr('y1', 0)
-            .attr('x2', 0)
-            .attr('y2', areaChartHeight)
-            .attr("class", "markerLine");
+        .attr('x1', 0)
+        .attr('y1', 0)
+        .attr('x2', 0)
+        .attr('y2', areaChartHeight)
+        .attr("class", "markerLine");
 
     areaChartSvg.append("g")
-            .attr("class", "x axis")
-            .attr("transform", "translate(0," + areaChartHeight + ")")
-            .call(xAxis)
-            .selectAll("text")
-            .attr("x", 39)
-            .attr("dx", "-.8em")
-            .attr("dy", ".72em")
-//            .attr("transform", "rotate(-15)")
-            .style("text-anchor", "end");
+        .attr("class", "x axis")
+        .attr("transform", "translate(0," + areaChartHeight + ")")
+        .call(xAxis)
+        .selectAll("text")
+        .attr("x", 39)
+        .attr("dx", "-.8em")
+        .attr("dy", ".72em")
+    //            .attr("transform", "rotate(-15)")
+        .style("text-anchor", "end");
 
     areaChartSvg.append("g")
-            .attr("class", "y axis")
-            .call(yAxis)
-            .append("text")
-            .attr("transform", "rotate(-90)")
-            .attr("y", 6)
-            .attr("dy", ".71em")
-            .style("text-anchor", "end")
-            .text("Hashtags");
+        .attr("class", "y axis")
+        .call(yAxis)
+        .append("text")
+        .attr("transform", "rotate(-90)")
+        .attr("y", 6)
+        .attr("dy", ".71em")
+        .style("text-anchor", "end")
+        .text("Hashtags");
 
     areaChartSvg.append("path")
-            .datum(dataJson)
-            .attr("class", "line")
-            .attr("d", line)
-            .attr("clip-path", "url(#rectClip)");
+        .datum(dataJson)
+        .attr("class", "line")
+        .attr("d", line)
+        .attr("clip-path", "url(#rectClip)");
 
     areaChartSvg.append("path")
-            .datum(dataJson)
-            .attr("class", "area")
-            .attr("d", area)
-            .attr("clip-path", "url(#rectClip)");
+        .datum(dataJson)
+        .attr("class", "area")
+        .attr("d", area)
+        .attr("clip-path", "url(#rectClip)");
 
     var brush = d3.svg.brush()
-            .x(x)
-            .extent([startingValue, endingValue])
-            .on("brush", brushed);
+        .x(x)
+        .extent([startingValue, endingValue])
+        .on("brush", brushed);
 
     var slider = areaChartSvg.append("g")
-            .attr("class", "slider")
-            .call(brush);
+        .attr("class", "slider")
+        .call(brush);
 
     var handle = slider.append("g")
-            .attr("class", "handle");
+        .attr("class", "handle");
 
     handle.append("path")
-            .attr("transform", "translate(0," + areaChartHeight + ")")
-            .attr("d", "M 0 -100 V 0");
+        .attr("transform", "translate(0," + areaChartHeight + ")")
+        .attr("d", "M 0 -100 V 0");
 
     handle.append('text')
-            .text(startingValue)
-            .attr("transform", "translate(" + (-18) + " ," + (areaChartHeight - 125) + ")");
+        .text(startingValue)
+        .attr("transform", "translate(" + (-18) + " ," + (areaChartHeight - 125) + ")");
 
     slider
-            .call(brush.event);
+        .call(brush.event);
 
     function brushed() {
         var value = brush.extent()[0];
@@ -298,25 +320,23 @@ function drawAreaChart() {
         });
 
         drawCircles(newData);
+        showImages(newData);
     }
 
     function playAnimation(timeout) {
 
         // Play animated slider
         slider
-                .call(brush.event)
-                .transition() // gratuitous intro!
-                .duration(timeout)
-                .call(brush.extent([x.domain()[1], x.domain()[1]]))
-                .call(brush.event);
+            .call(brush.event)
+            .transition() // gratuitous intro!
+            .duration(timeout)
+            .call(brush.extent([x.domain()[1], x.domain()[1]]))
+            .call(brush.event);
 
         // Play animated area chart
         d3.select("#rectClip rect")
-                .transition().duration(timeout)
-                .attr("width", areaChartWidth);
-
-        // Show images
-        setIntervalforImages(timeout);
+            .transition().duration(timeout)
+            .attr("width", areaChartWidth);
     }
 
     $("#playButton").click(function () {
@@ -324,31 +344,27 @@ function drawAreaChart() {
     });
 }
 
-var timeHandler,
-        imageIndex = 0;
+var lastDrawnIndex = 0;
 
-function setIntervalforImages(timeout) {
-    var dt = timeout / (dataJson.length + 10);
-    timeHandler = window.setInterval(showImages, dt);
-}
-
-function showImages() {
+function showImages(newData) {
 
     // Append to element
     var elem = $("#hashtagImages");
 
-    imageIndex++;
+    while (lastDrawnIndex < newData.length) {
+        // some image does not have a caption
+        var captionText = ""
+        if (newData[lastDrawnIndex].caption != null) {
+            captionText = newData[lastDrawnIndex].caption.text;
+        }
 
-    if (imageIndex > dataJson.length - 1) {
-        window.clearInterval(timeHandler);
-        imageIndex = 0;
-    }
-
-    elem.append("<a class=\"example-image-link\" href=\""
-            + dataJson[imageIndex].images.standard_resolution.url
-            + "\" data-lightbox=\"image-" + imageIndex
-            + "\" data-title=\"" + dataJson[imageIndex].caption.text
-            + "(" + dataJson[imageIndex].location.name + ")" + "\">"
+        elem.append("<a class=\"example-image-link\" href=\""
+            + newData[lastDrawnIndex].images.standard_resolution.url
+            + "\" data-lightbox=\"image-" + lastDrawnIndex
+            + "\" data-title=\"" + captionText
+            + "(" + newData[lastDrawnIndex].location.name + ")" + "\">"
             + "<img class=\"example-image\" width=40px height=40px src=\""
-            + dataJson[imageIndex].images.thumbnail.url + "\"></a>");
+            + newData[lastDrawnIndex].images.thumbnail.url + "\"></a>");
+        lastDrawnIndex++;
+    }
 }

@@ -27,6 +27,17 @@ html, body{
 2 - CUSTOM STYLES
 =================================================*/
 
+.popupImage {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    width: 200px;
+    height: 200px;
+    margin-top: -100px; /*set to a negative number 1/2 of your height*/
+    margin-left: -100px; /*set to a negative number 1/2 of your width*/
+    z-index: 1;
+}
+
 .sidebar {
     position: fixed;
     top: 0;
