@@ -236,7 +236,7 @@ function drawAreaChart() {
             });
 
     var areaChartSvg = d3.select("#areaChartSvg").append("svg")
-            .attr("width", "80%")
+            .attr("width", "75%")
             .attr("height", "100%")
             .attr("viewBox", "0 0 " + width + " " + h)
             .attr("preserveAspectRatio", "xMinYMid meet")
@@ -398,14 +398,14 @@ function drawAreaChart() {
                     setup("data/bostonstrong.json",
                             "http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png", [7.8, 60], 2);
                     $("body").addClass("normal").removeClass("invert");
-                    $("p.tagDescription").html("The hashtag #BostonStrong spread on"
-                            + "Instagram after the terrorist attack of the Boston Marathon bombing.");
+                    $("p.tagDescription").html("The hashtag #BostonStrong spread on "
+                            + "Instagram after the Boston Marathon bombing.");
                     break;
                 default:
                     setup("data/parisattacks.json",
                             "http://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}.png", [7.8, 60], 2);
                     $("body").addClass("invert").removeClass("normal");
-                    $("p.tagDescription").html("The hashtag #ParisAttacks spread on"
+                    $("p.tagDescription").html("The hashtag #ParisAttacks spread on "
                             + "Instagram after a series of attacks shook Paris.");
                     break;
             }
