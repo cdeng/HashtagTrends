@@ -27,6 +27,15 @@
     <body class="invert">
 
         <div id="sidebar" class="sidebar">
+            <div class="page-header">
+                <h3>
+                    HashtagTrends
+                    <small>
+                        <a href="https://github.com/cdeng/HashtagTrends"
+                           title="Github Project Link" target="_blank">Github Project</a>
+                    </small>
+                </h3>
+            </div>
             <div class="btn-group hashtagDropdown">
                 <a class="btn dropdown-toggle btn-select" data-toggle="dropdown" href="#">
                     #ParisAttacks<span class="caret"></span></a>
@@ -37,11 +46,28 @@
             </div>
             <p class="tagDescription">The hashtag #ParisAttacks spread on
                 Instagram after a series of attacks shook Paris.</p>
-            <div id="hashtagImages" class="hashtagImages"></div>
-            <button type="button" class="btn btn-primary btn-lg" id="playButton">
-                <i class="fa fa-play-circle"></i> Play</button>
-            <button type="button" class="btn btn-default btn-lg" id="resetButton">
-                <i class="fa fa-undo"></i> Reset</button>
+            <div id="hashtagImages" class="hashtagImages hide"></div>
+            <div id="hashtagTrendsDesc" class="hashtagTrendsDesc">
+                <hr>
+                <p>HashtagTrends is a visualization project that shows the information
+                    spreading through Instagram #Hashtag.</p>
+                <p>User can watch the growth of specific Instagram #Hashtag by
+                    clicking on the <strong>"Play"</strong> button on the right-bottom corner.</p>
+                <p>User can reset the visualization by clicking <strong>"Reset"</strong>
+                    button, and change to another available #Hashtag through the
+                    current <strong>#Hashtag dropdown</strong> button on the top-right.</p>
+                <p>This project was created by Cheng Deng, Mi Tian and Xing Liu for a graduate course
+                    in Data Visualization at WPI taught by Lane Harrison. Several open-source projects
+                    were used under the MIT License including D3, jQuery, Bootstrap, LeafletJs,
+                    Cartocdn Map, Lightbox, Moment.js, and D3-tip.
+                    Data courtesy of the Instagram and their Developer APIs.</p>
+            </div>
+            <div class="controlButtons">
+                <button type="button" class="btn btn-primary btn-lg" id="playButton">
+                    <i class="fa fa-play-circle"></i> Play</button>
+                <button type="button" class="btn btn-default btn-lg" id="resetButton">
+                    <i class="fa fa-undo"></i> Reset</button>
+            </div>
         </div>
 
         <div id="hashtagTrendsMapSvg" class="hashtagTrendsMapSvg"></div>

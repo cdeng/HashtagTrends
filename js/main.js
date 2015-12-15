@@ -333,6 +333,10 @@ function drawAreaChart() {
 
     function playAnimation(timeout) {
 
+        // Show image section
+        $("#hashtagTrendsDesc").addClass("hide");
+        $("#hashtagImages").removeClass("hide");
+
         // Play animated slider
         slider
                 .call(brush.event)
@@ -358,6 +362,8 @@ function drawAreaChart() {
                 .attr("width", 0);
         // Reset image section
         $("#hashtagImages").html("");
+        $("#hashtagImages").addClass("hide");
+        $("#hashtagTrendsDesc").removeClass("hide");
     }
 
     $("#playButton").click(function () {
