@@ -36,7 +36,8 @@ var map,
         height = $(window).height(),
         startingValue,
         endingValue,
-        currentTag = "#ParisAttacks";
+        currentTag = "#ParisAttacks",
+        lastDrawnIndex = 0;
 
 // Unix date converter
 function dateConverter(unixTime) {
@@ -364,6 +365,7 @@ function drawAreaChart() {
         $("#hashtagImages").html("");
         $("#hashtagImages").addClass("hide");
         $("#hashtagTrendsDesc").removeClass("hide");
+        lastDrawnIndex = 0;
     }
 
     $("#playButton").click(function () {
@@ -413,8 +415,6 @@ function drawAreaChart() {
         $("body").on("click", tip.hide);
     });
 }
-
-var lastDrawnIndex = 0;
 
 function showImages(newData) {
 
