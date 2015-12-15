@@ -111,12 +111,12 @@ function setup(dataUrl, mapUrl, viewCenter, zoom) {
 
     tip = d3.tip().attr("class", "tooltip").html(function (d, i) {
         return "<div class='row'><div class='tooltip-left col-md-5'>"
-                + "<a class='example-image-link' href='" + d.images.low_resolution.url
+                + "<a class='example-image-link' href='" + d.images.standard_resolution.url
                 + "' data-lightbox=\"image-" + i
                 + "\" data-title=\"" + d.caption.text
                 + "(" + d.location.name + ")" + "\">"
                 + "<img class=\"example-image\" onerror=\"imgError(this);\" src=\""
-                + d.images.low_resolution.url + "\"></a></div>"
+                + d.images.thumbnail.url + "\"></a></div>"
                 + "<div class='tooltip-right col-md-7'>"
                 + "<p><strong>Created on:</strong><br>" + moment(d.created_time).format("llll z") + "</p>"
                 + "<p><strong>Location:</strong><br>" + d.location.name + "</p></div></div>";
@@ -429,7 +429,7 @@ function showImages(newData) {
         }
 
         elem.prepend("<a class=\"example-image-link\" href=\""
-                + newData[lastDrawnIndex].images.low_resolution.url
+                + newData[lastDrawnIndex].images.standard_resolution.url
                 + "\" data-lightbox=\"image-" + lastDrawnIndex
                 + "\" data-title=\"" + captionText
                 + "(" + newData[lastDrawnIndex].location.name + ")" + "\">"
